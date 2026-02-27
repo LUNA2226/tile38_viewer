@@ -1,0 +1,28 @@
+name: Build ARM64 Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Ativar QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Ativar Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build imagem ARM64
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/arm64
+          push: false
+          tags: tile38-viewer:arm64
