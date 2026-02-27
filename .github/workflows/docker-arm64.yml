@@ -22,7 +22,8 @@ jobs:
       - name: Build imagem ARM64
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./src/viewer
+          file: ./src/viewer/Dockerfile
           platforms: linux/arm64
           push: false
           tags: tile38-viewer:arm64
