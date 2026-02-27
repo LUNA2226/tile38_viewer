@@ -22,7 +22,7 @@ jobs:
       - name: Build imagem ARM64
         uses: docker/build-push-action@v5
         with:
-          context: ./src/viewer
+          context: .
           file: ./src/viewer/Dockerfile
           platforms: linux/arm64
           push: false
