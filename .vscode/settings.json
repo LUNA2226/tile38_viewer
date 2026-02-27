@@ -1,0 +1,4 @@
+{
+    // Start terminal in workspace root to avoid invalid cwd errors
+    "terminal.integrated.cwd": "${workspaceFolder}"
+}
