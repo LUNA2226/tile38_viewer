@@ -1,19 +1,19 @@
+# ===== BUILD STAGE =====
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copia tudo
-COPY . .
+# Copia apenas o csproj primeiro (melhora cache e evita erro de caminho)
+COPY src/viewer/*.csproj ./viewer/
 
-# Vai para a pasta correta do projeto
-WORKDIR /src/src/viewer
+WORKDIR /src/viewer
+RUN dotnet restore
 
-# Restaura explicitamente o projeto
-RUN dotnet restore tile38_viewer.csproj
+# Copia o restante do código
+COPY src/viewer/. ./
 
-# Publica explicitamente o projeto
-RUN dotnet publish tile38_viewer.csproj -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
-# Runtime
+# ===== RUNTIME STAGE =====
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
