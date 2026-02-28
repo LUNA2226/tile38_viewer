@@ -1,18 +1,22 @@
-# ===== BUILD =====
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
+WORKDIR /src
 
-# Copia tudo
+# copiar tudo
 COPY . .
 
-# Mostra estrutura (debug definitivo)
-RUN ls -R
+# entrar na pasta do projeto
+WORKDIR /src/src/viewer
 
-# Publica automaticamente o único projeto encontrado
-RUN dotnet publish -c Release -o /publish
+# restaurar dependências
+RUN dotnet restore tile38_viewer.csproj
 
-# ===== RUNTIME =====
+# publicar
+RUN dotnet publish tile38_viewer.csproj -c Release -o /app/publish
+
+# imagem final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /publish .
+
+COPY --from=build /app/publish .
+
 ENTRYPOINT ["dotnet", "tile38_viewer.dll"]
