@@ -37,4 +37,4 @@ jobs:
           file: ./src/viewer/Dockerfile
           platforms: linux/arm64
           push: true
-          tags: ghcr.io/LUNA2226/tile38-viewer:latest
+          tags: ghcr.io/luna2226/tile38-viewer:latest
